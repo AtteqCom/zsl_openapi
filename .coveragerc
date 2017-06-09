@@ -1,0 +1,16 @@
+[paths]
+source =
+   src/zsl_openapi
+   */site-packages/zsl_openapi
+
+[run]
+branch = true
+source =
+    zsl_openapi
+    tests
+parallel = true
+
+[report]
+show_missing = true
+precision = 2
+omit = *migrations*
