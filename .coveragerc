@@ -1,12 +1,10 @@
 [paths]
-source =
-   src/zsl_openapi
-   */site-packages/zsl_openapi
+source = src
 
 [run]
 branch = true
 source =
-    zsl_openapi
+    src
     tests
 parallel = true
 

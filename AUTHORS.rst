@@ -2,4 +2,4 @@
 Authors
 =======
 
-* Martin Babka - ktiml.mff.cuni.cz/~babka
+* Martin Babka - http://ktiml.mff.cuni.cz/~babka

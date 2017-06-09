@@ -10,8 +10,8 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - | |travis| |appveyor| |requires|
-        | |codecov|
+      - | |travis| |requires|
+        | |coveralls| |codecov|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
         | |commits-since|
@@ -24,13 +24,13 @@ Overview
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/AtteqCom/zsl_openapi
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/AtteqCom/zsl_openapi?branch=master&svg=true
-    :alt: AppVeyor Build Status
-    :target: https://ci.appveyor.com/project/AtteqCom/zsl_openapi
-
 .. |requires| image:: https://requires.io/github/AtteqCom/zsl_openapi/requirements.svg?branch=master
     :alt: Requirements Status
     :target: https://requires.io/github/AtteqCom/zsl_openapi/requirements/?branch=master
+
+.. |coveralls| image:: https://coveralls.io/repos/AtteqCom/zsl_openapi/badge.svg?branch=master&service=github
+    :alt: Coverage Status
+    :target: https://coveralls.io/r/AtteqCom/zsl_openapi
 
 .. |codecov| image:: https://codecov.io/github/AtteqCom/zsl_openapi/coverage.svg?branch=master
     :alt: Coverage Status
