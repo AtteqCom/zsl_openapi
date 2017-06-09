@@ -10,7 +10,7 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - | |travis| |requires|
+      - | |travis|
         | |coveralls| |codecov|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
@@ -23,10 +23,6 @@ Overview
 .. |travis| image:: https://travis-ci.org/AtteqCom/zsl_openapi.svg?branch=master
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/AtteqCom/zsl_openapi
-
-.. |requires| image:: https://requires.io/github/AtteqCom/zsl_openapi/requirements.svg?branch=master
-    :alt: Requirements Status
-    :target: https://requires.io/github/AtteqCom/zsl_openapi/requirements/?branch=master
 
 .. |coveralls| image:: https://coveralls.io/repos/AtteqCom/zsl_openapi/badge.svg?branch=master&service=github
     :alt: Coverage Status
