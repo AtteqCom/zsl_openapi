@@ -63,7 +63,9 @@ setup(
         # eg: 'keyword1', 'keyword2', 'keyword3',
     ],
     install_requires=[
-        # eg: 'aspectlib==1.1.1', 'six>=1.7',
+        'zsl>=0.15.6',
+        'Jinja2',
+        'PyYAML',
     ],
     extras_require={
         # eg:
