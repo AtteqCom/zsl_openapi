@@ -1,8 +1,14 @@
-from typing import Dict
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
 
-from typing import List
+from builtins import *  # NOQA
+from typing import Dict  # NOQA
+from typing import List  # NOQA
 
-from werkzeug.datastructures import ImmutableDict, ImmutableList
+from werkzeug.datastructures import ImmutableDict
+from werkzeug.datastructures import ImmutableList
 
 
 class ApiExternalDocs:
@@ -53,10 +59,12 @@ class ApiModelDefinition:
         self._properties = {}  # type: Dict[str, ApiModelProperty]
 
     @property
-    def properties(self) -> Dict[str, ApiModelProperty]:
+    def properties(self):
+        # type: ()->Dict[str, ApiModelProperty]
         return ImmutableDict(self._properties)
 
-    def add_property(self, model_property: ApiModelProperty):
+    def add_property(self, model_property):
+        # type: (ApiModelProperty)->None
         self._properties[model_property.name] = model_property
 
 
@@ -68,15 +76,19 @@ class ApiDescription:
         self._definitions = {}  # type: Dict[str, ApiModelDefinition]
 
     @property
-    def tags(self) -> List[ApiTag]:
+    def tags(self):
+        # type: ()->List[ApiTag]
         return ImmutableList(self._tags)
 
     @property
-    def definitions(self) -> Dict[str, ApiModelDefinition]:
+    def definitions(self):
+        # type: ()->Dict[str, ApiModelDefinition]
         return ImmutableDict(self._definitions)
 
-    def add_model_definition(self, model_definition: ApiModelDefinition) -> None:
+    def add_model_definition(self, model_definition):
+        # type: (ApiModelDefinition)->None
         self._definitions[model_definition.name] = model_definition
 
     def add_tag(self, tag):
+        # type: (ApiTag)->None
         self._tags.append(tag)

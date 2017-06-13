@@ -63,9 +63,10 @@ setup(
         # eg: 'keyword1', 'keyword2', 'keyword3',
     ],
     install_requires=[
-        'zsl>=0.15.6',
+        'zsl>=0.15.7',
         'Jinja2',
         'PyYAML',
+        'future'
     ],
     extras_require={
         # eg:

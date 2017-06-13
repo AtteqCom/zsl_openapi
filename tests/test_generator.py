@@ -1,13 +1,26 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 import os
+from builtins import *  # NOQA
+from io import BytesIO
 from io import StringIO
 from unittest.case import TestCase
 
 import jinja2
 import yaml
-from jinja2.utils import select_autoescape
 
-from zsl_openapi.api import ApiDescription, ApiDescriptionInfo, ApiLicense, ApiContact, ApiModelDefinition, \
-    ApiModelProperty, ApiTag, ApiExternalDocs
+from zsl_openapi import IS_PYTHON_3
+from zsl_openapi.api import ApiContact
+from zsl_openapi.api import ApiDescription
+from zsl_openapi.api import ApiDescriptionInfo
+from zsl_openapi.api import ApiExternalDocs
+from zsl_openapi.api import ApiLicense
+from zsl_openapi.api import ApiModelDefinition
+from zsl_openapi.api import ApiModelProperty
+from zsl_openapi.api import ApiTag
 from zsl_openapi.generator import ApiGenerator
 
 
@@ -17,7 +30,6 @@ class GeneratorTestCase(TestCase):
             context = {}
         env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')),
-            autoescape=select_autoescape(['yml'])
         )
         template = env.get_template(name, context)
         return template.render(context)
@@ -25,7 +37,7 @@ class GeneratorTestCase(TestCase):
     def test_template(self):
         g = ApiGenerator()
         d = self.given_api_description
-        out = StringIO()
+        out = StringIO() if IS_PYTHON_3 else BytesIO()
         g.generate(d, out)
         self.thenYAMLShouldBeEqual("simple_api_spec.yml", out.getvalue(), "Result of the simple generator should be "
                                                                           "correct.")
