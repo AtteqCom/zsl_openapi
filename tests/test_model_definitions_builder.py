@@ -51,4 +51,3 @@ class ModelBuilderTestCase(TestCase):
         self.assertEquals("created", created_property.name, "Created property must have the correct name")
         self.assertEquals("string", created_property.type, "Created property must have the correct type")
         self.assertEquals("date-time", created_property.format, "Created property must have date-time format")
-

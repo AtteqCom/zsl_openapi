@@ -5,7 +5,7 @@ Overview
 .. start-badges
 
 .. list-table::
-:stub-columns: 1
+    :stub-columns: 1
 
     * - docs
       - |docs|
@@ -17,40 +17,40 @@ Overview
         | |commits-since|
 
 .. |docs| image:: https://readthedocs.org/projects/zsl_openapi/badge/?style=flat
-:target: https://readthedocs.org/projects/zsl_openapi
+    :target: https://readthedocs.org/projects/zsl_openapi
     :alt: Documentation Status
 
 .. |travis| image:: https://travis-ci.org/AtteqCom/zsl_openapi.svg?branch=master
-:alt: Travis-CI Build Status
+    :alt: Travis-CI Build Status
     :target: https://travis-ci.org/AtteqCom/zsl_openapi
 
 .. |coveralls| image:: https://coveralls.io/repos/AtteqCom/zsl_openapi/badge.svg?branch=master&service=github
-:alt: Coverage Status
+    :alt: Coverage Status
     :target: https://coveralls.io/r/AtteqCom/zsl_openapi
 
 .. |codecov| image:: https://codecov.io/github/AtteqCom/zsl_openapi/coverage.svg?branch=master
-:alt: Coverage Status
+    :alt: Coverage Status
     :target: https://codecov.io/github/AtteqCom/zsl_openapi
 
 .. |version| image:: https://img.shields.io/pypi/v/zsl-openapi.svg
-:alt: PyPI Package latest release
+    :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/zsl-openapi
 
 .. |commits-since| image:: https://img.shields.io/github/commits-since/AtteqCom/zsl_openapi/v0.1.1.svg
-:alt: Commits since latest release
-:target: https://github.com/AtteqCom/zsl_openapi/compare/v0.1.1...master
+    :alt: Commits since latest release
+    :target: https://github.com/AtteqCom/zsl_openapi/compare/v0.1.1...master
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/zsl-openapi.svg
-:alt: PyPI Wheel
+    :alt: PyPI Wheel
     :target: https://pypi.python.org/pypi/zsl-openapi
 
 .. |supported-versions| image:: https://img.shields.io/pypi/pyversions/zsl-openapi.svg
-:alt: Supported versions
-:target: https://pypi.python.org/pypi/zsl-openapi
+    :alt: Supported versions
+    :target: https://pypi.python.org/pypi/zsl-openapi
 
 .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/zsl-openapi.svg
-:alt: Supported implementations
-:target: https://pypi.python.org/pypi/zsl-openapi
+    :alt: Supported implementations
+    :target: https://pypi.python.org/pypi/zsl-openapi
 
 
 .. end-badges
@@ -86,8 +86,6 @@ Then you may use CLI `open_api` command.
         --output api/openapi_spec_full.yml \
         --description api/openapi_spec.yml
 
-
-
 Documentation
 =============
 
@@ -107,11 +105,11 @@ To run the all tests run::
 Note, to combine the coverage data from all the tox environments run:
 
 .. list-table::
-:widths: 10 90
+    :widths: 10 90
     :stub-columns: 1
 
-        - - Windows
-          - ::
+    - - Windows
+      - ::
 
             set PYTEST_ADDOPTS=--cov-append
             tox
@@ -120,5 +118,4 @@ Note, to combine the coverage data from all the tox environments run:
       - ::
 
             PYTEST_ADDOPTS=--cov-append tox
-
 
