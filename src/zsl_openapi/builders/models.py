@@ -7,6 +7,10 @@ from builtins import *  # NOQA
 from inspect import isclass
 
 from sqlalchemy.orm.attributes import InstrumentedAttribute
+from sqlalchemy.orm.base import MANYTOONE
+from sqlalchemy.orm.dependency import ManyToManyDP, ManyToOneDP, OneToManyDP
+from sqlalchemy.orm.relationships import RelationshipProperty
+
 from zsl.db.model.sql_alchemy import DeclarativeBase
 from zsl.utils.string_helper import camelcase_to_underscore
 
@@ -51,9 +55,45 @@ class ApiDescriptionSqlAlchemyModelDefinitionsBuilder(ApiDescriptionBuilder):
             if not isinstance(column, InstrumentedAttribute):
                 continue
 
-            property_definition = ApiModelProperty()
-            property_definition.name = column_name
-            property_definition.type = camelcase_to_underscore(type(column.type).__name__)
-            model_definition.add_property(property_definition)
+            self._extract_property(column, column_name, model_definition)
 
         return model_definition
+
+    def _extract_property(self, column, column_name, model_definition):
+        property_definition = ApiModelProperty()
+        property_definition.name = column_name
+        if isinstance(column.prop, RelationshipProperty):
+            self._extract_relationship_property(column, property_definition)
+        else:
+            self._extract_scalar_property(column, property_definition)
+        model_definition.add_property(property_definition)
+
+    def _extract_relationship_property(self, column, property_definition):
+        dp = self._get_dependency_processor(column)
+        is_dp_supported = isinstance(dp, (ManyToManyDP, ManyToOneDP, OneToManyDP))
+        if is_dp_supported:
+            is_simple_object = column.prop._dependency_processor.direction == MANYTOONE
+            if is_simple_object:
+                property_definition.type = self._get_column_type(column)
+            else:
+                property_definition.type = "array"
+                property_definition.items.ref = "#/definitions/{0}".format(self._get_column_type(column))
+        else:
+            raise TypeError("Can not process type definitions, dependency processor {0} is not supported.".format(dp))
+
+    def _get_column_type(self, column):
+        return column.prop.mapper.class_.__name__
+
+    def _get_dependency_processor(self, column):
+        return column.prop._dependency_processor if column.prop._dependency_processor else \
+            column.property._dependency_processor
+
+    def _extract_scalar_property(self, column, property_definition):
+        property_type = camelcase_to_underscore(type(column.type).__name__)
+        property_format = None
+        if property_type == "date_time":
+            property_type = "string"
+            property_format = "date-time"
+
+        property_definition.type = property_type
+        property_definition.format = property_format

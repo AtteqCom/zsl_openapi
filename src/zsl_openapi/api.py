@@ -45,11 +45,18 @@ class ApiDescriptionInfo:
         self.license = ApiLicense()
 
 
+class ApiArrayProperty:
+    def __init__(self):
+        self.type = None  # type: str
+        self.ref = None  # type: str
+
+
 class ApiModelProperty:
     def __init__(self):
         self.name = None  # type: str
         self.type = None  # type: str
         self.format = None  # type: str
+        self.items = ApiArrayProperty()
 
 
 class ApiModelDefinition:

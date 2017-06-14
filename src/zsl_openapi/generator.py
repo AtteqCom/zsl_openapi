@@ -30,7 +30,7 @@ class ApiGenerator(object):
         self._write_definitions(api_description, accumulator)
         self._write_external_docs(api_description.external_docs, accumulator)
         self._write_tags(api_description, accumulator)
-        yaml.safe_dump(accumulator, output, encoding='utf-8', allow_unicode=True)
+        yaml.safe_dump(accumulator, output, encoding='utf-8', allow_unicode=True, default_flow_style=False)
 
     def _write_header(self, accumulator):
         # type: (Accumulator)->None
@@ -77,6 +77,9 @@ class ApiGenerator(object):
         for model_property in api_definition.properties.values():
             accumulator_property = {}  # type: Accumulator
             self._write_properties(model_property, accumulator_property, ['type', 'format'])
+            accumulator_property_items = {}
+            self._write_properties(model_property.items, accumulator_property_items, ['type', 'ref'], {'ref': '$ref'})
+            self._write_value('items', accumulator_property_items, accumulator_property)
             self._write_value(model_property.name, accumulator_property, accumulator_properties)
 
         self._write_value('properties', accumulator_properties, accumulator_definition)
