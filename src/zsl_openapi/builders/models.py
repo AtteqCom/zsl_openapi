@@ -8,9 +8,10 @@ from inspect import isclass
 
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 from sqlalchemy.orm.base import MANYTOONE
-from sqlalchemy.orm.dependency import ManyToManyDP, ManyToOneDP, OneToManyDP
+from sqlalchemy.orm.dependency import ManyToManyDP
+from sqlalchemy.orm.dependency import ManyToOneDP
+from sqlalchemy.orm.dependency import OneToManyDP
 from sqlalchemy.orm.relationships import RelationshipProperty
-
 from zsl.db.model.sql_alchemy import DeclarativeBase
 from zsl.utils.string_helper import camelcase_to_underscore
 

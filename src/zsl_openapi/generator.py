@@ -30,6 +30,7 @@ class ApiGenerator(object):
         self._write_definitions(api_description, accumulator)
         self._write_external_docs(api_description.external_docs, accumulator)
         self._write_tags(api_description, accumulator)
+        accumulator['paths'] = {}
         yaml.safe_dump(accumulator, output, encoding='utf-8', allow_unicode=True, default_flow_style=False)
 
     def _write_header(self, accumulator):
