@@ -4,6 +4,8 @@
 
 OpenAPI module allows you to generate YAML files with the OpenAPI specification
 of the ZSL API.
+
+It adds a CLI so that the module can be used via standard ZSL cli.
 """
 from __future__ import absolute_import
 from __future__ import division

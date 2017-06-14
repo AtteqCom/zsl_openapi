@@ -5,7 +5,7 @@ from zsl.db.model.sql_alchemy import DeclarativeBase
 
 
 class User2(DeclarativeBase):
-    __tablename__ = 'user'
+    __tablename__ = 'user2'
     __table_args__ = {'useexisting': True}
 
     id = Column(Integer, primary_key=True)

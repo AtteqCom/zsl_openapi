@@ -88,3 +88,13 @@ To run a subset of tests::
 To run all the test environments in *parallel* (you need to ``pip install detox``)::
 
     detox
+
+Remarks for Windows users
+-------------------------
+
+If you have a MinGW/MSYS2 environment, when invoking tox for the first time, remove MinGW's python from `PATH` variable
+so that the things get initialized correctly. If there are any errors and warnings follow the solution printed in the
+console.
+
+If `vcruntime140.dll` put it into `PATH` folder such as main virtualenv `Scripts` folder.
+

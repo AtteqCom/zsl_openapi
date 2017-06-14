@@ -35,7 +35,7 @@ class ModelBuilderTestCase(TestCase):
         self.assertEquals("User", model.name, "Name of the model must be correct.")
         self.assertEquals("object", model.type, "Type of the model must be object.")
 
-        self.assertEquals(3, len(model.properties), "There are 3 properties of the model.")
+        self.assertEquals(4, len(model.properties), "There are 3 properties of the model.")
 
         email_property = model.properties['email']
         self.assertEquals("email", email_property.name, "Email property must have the correct name")
@@ -46,3 +46,9 @@ class ModelBuilderTestCase(TestCase):
         self.assertEquals("id", id_property.name, "Id property must have the correct name")
         self.assertEquals("integer", id_property.type, "Id property must have the correct type")
         self.assertIsNone(id_property.format, "Id property must have no format")
+
+        created_property = model.properties['created']
+        self.assertEquals("created", created_property.name, "Created property must have the correct name")
+        self.assertEquals("string", created_property.type, "Created property must have the correct type")
+        self.assertEquals("date-time", created_property.format, "Created property must have date-time format")
+

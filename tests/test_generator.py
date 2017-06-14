@@ -28,6 +28,7 @@ class GeneratorTestCase(YAMLTestCase, TestCase):
         d = self.given_api_description
         out = StringIO() if IS_PYTHON_3 else BytesIO()
         g.generate(d, out)
+        self.maxDiff = None
         self.thenYAMLShouldBeEqual("test_generator_api_spec.yml", out.getvalue(),
                                    "Result of the simple generator should be correct.")
 

@@ -61,6 +61,7 @@ class OpenAPICliTestCase(ZslTestCase, TestCase, YAMLTestCase):
 
         with open(self._temp_filename) as f:
             result_file_content = f.read()
+        self.maxDiff = None
         self.thenYAMLShouldBeEqual(
             'test_cli_description_result_spec.yml',
             result_file_content,

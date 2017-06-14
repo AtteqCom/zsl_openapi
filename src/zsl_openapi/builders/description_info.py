@@ -66,6 +66,8 @@ def fill(yaml_spec, api_description):
     else:
         raise TypeError("When filling OpenAPI only dict/str/unicode may be parsed.")
 
+    del yaml_dict['paths']
+
     fill_dict(yaml_dict, api_description, HINTS)
 
 
@@ -77,9 +79,3 @@ class FileApiDescriptionInfoBuilder(ApiDescriptionBuilder):
 
     def build(self, api_description):
         fill(self._loaded_spec, api_description)
-
-
-class SimpleApiDescriptionInfoBuilder(ApiDescriptionBuilder):
-    def build(self, api_description):
-        # type: (ApiDescription)->None
-        pass

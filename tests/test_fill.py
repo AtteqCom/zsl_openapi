@@ -24,6 +24,7 @@ class FillTestCase(TestCase, YAMLTestCase):
         out = StringIO() if IS_PYTHON_3 else BytesIO()
         ApiGenerator().generate(api_description, out)
 
+        self.maxDiff = None
         self.thenYAMLShouldBeEqual(
             'test_cli_description_result_spec.yml',
             out.getvalue(),
