@@ -4,6 +4,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from builtins import *  # NOQA
+from io import TextIOWrapper  # NOQA
 from typing import IO  # NOQA
 from typing import Any  # NOQA
 from typing import Dict  # NOQA
@@ -20,19 +21,16 @@ from zsl_openapi.api import ApiTag  # NOQA
 Accumulator = Dict[str, Any]
 
 
-class ApiGenerator:
-    def __init__(self):
-        pass
-
+class ApiGenerator(object):
     def generate(self, api_description, output):
-        # type: (ApiDescription, IO[str])->None
+        # type: (ApiDescription, IO[str]|TextIOWrapper)->None
         accumulator = {}  # type: Accumulator
         self._write_header(accumulator)
         self._write_info(api_description, accumulator)
         self._write_definitions(api_description, accumulator)
         self._write_external_docs(api_description.external_docs, accumulator)
         self._write_tags(api_description, accumulator)
-        yaml.dump(accumulator, output, default_flow_style=False)
+        yaml.safe_dump(accumulator, output, encoding='utf-8', allow_unicode=True)
 
     def _write_header(self, accumulator):
         # type: (Accumulator)->None

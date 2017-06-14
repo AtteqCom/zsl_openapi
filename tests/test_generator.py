@@ -3,14 +3,12 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import os
 from builtins import *  # NOQA
 from io import BytesIO
 from io import StringIO
 from unittest.case import TestCase
 
-import jinja2
-import yaml
+from yaml_test_case import YAMLTestCase
 
 from zsl_openapi import IS_PYTHON_3
 from zsl_openapi.api import ApiContact
@@ -24,16 +22,7 @@ from zsl_openapi.api import ApiTag
 from zsl_openapi.generator import ApiGenerator
 
 
-class GeneratorTestCase(TestCase):
-    def render_template(self, name, context=None):
-        if context is None:
-            context = {}
-        env = jinja2.Environment(
-            loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')),
-        )
-        template = env.get_template(name, context)
-        return template.render(context)
-
+class GeneratorTestCase(YAMLTestCase, TestCase):
     def test_template(self):
         g = ApiGenerator()
         d = self.given_api_description
@@ -78,9 +67,3 @@ class GeneratorTestCase(TestCase):
 
         d.external_docs = ext_docs
         return d
-
-    def thenYAMLShouldBeEqual(self, template, result, message, template_context=None):
-        expected_result = self.render_template(template, template_context)
-        yaml_expected = yaml.load(expected_result)
-        yaml_computed = yaml.load(result)
-        self.assertEquals(yaml_expected, yaml_computed, message)
