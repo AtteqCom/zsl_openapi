@@ -66,11 +66,10 @@ Installation
 
     pip install zsl-openapi
 
-
 How to use
 ==========
 
-Define container with the :class:`zsl_openapi.module.OpenAPIModule`.
+Define container with the `zsl_openapi.module.OpenAPIModule`.
 
 ::
 
