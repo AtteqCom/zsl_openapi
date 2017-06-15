@@ -52,12 +52,12 @@ class OpenAPICliTestCase(ZslTestCase, TestCase, YAMLTestCase):
                 'generate',
                 '--output', self._temp_filename,
                 '--description', os.path.join(os.path.dirname(__file__), 'templates/test_cli_description_spec.yml'),
-                '--package', 'models',
-                '--package', 'models_cli'
+                '--package', 'tests.    models',
+                '--package', 'tests.models_cli'
             ]
         )
 
-        self.assertEquals(0, result.exit_code, "No error expected.")
+        self.assertEqual(0, result.exit_code, "No error expected, having error: {0}.".format(result.output))
 
         with open(self._temp_filename) as f:
             result_file_content = f.read()

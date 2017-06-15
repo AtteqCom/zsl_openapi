@@ -40,6 +40,14 @@ definitions:
   User2:
     type: "object"
     properties:
+      clients:
+        type: "array"
+        items:
+          $ref: '#/definitions/User2'
+      customers:
+        type: "array"
+        items:
+          $ref: '#/definitions/User2'
       id:
         type: "integer"
       name:

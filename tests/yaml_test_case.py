@@ -18,4 +18,4 @@ class YAMLTestCase(object):
         expected_result = self.render_template(template, template_context)
         yaml_expected = yaml.load(expected_result)
         yaml_computed = yaml.load(result)
-        self.assertEquals(yaml_expected, yaml_computed, message)
+        self.assertEqual(yaml_expected, yaml_computed, message)

@@ -3,6 +3,7 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import logging
 from builtins import *  # NOQA
 from io import BytesIO
 from io import StringIO
@@ -18,6 +19,8 @@ from zsl_openapi.generator import ApiGenerator
 
 class FillTestCase(TestCase, YAMLTestCase):
     def testYamlFill(self):
+        logging.getLogger('zsl_openapi').setLevel(logging.DEBUG)
+
         api_description = ApiDescription()
         yaml_spec = self.render_template('test_cli_description_result_spec.yml')
         fill(yaml_spec, api_description)

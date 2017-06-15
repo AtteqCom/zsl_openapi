@@ -14,6 +14,7 @@ from __future__ import unicode_literals
 
 import importlib
 import logging
+import sys
 import traceback
 from builtins import *  # NOQA
 
@@ -73,8 +74,10 @@ class OpenAPICli(object):
                 for single_package in package:
                     mod = importlib.import_module(single_package)
                     ApiDescriptionSqlAlchemyModelDefinitionsBuilder(mod).build(api_description)
-            except:
-                traceback.print_exc()
+            except Exception as e:
+                traceback.print_exception()
+                print(e)
+                sys.exit(1)
             with open(output, 'w') as f:
                 ApiGenerator().generate(api_description, f)
 

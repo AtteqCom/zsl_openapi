@@ -55,7 +55,10 @@ Overview
 
 .. end-badges
 
-Generate OpenAPI specification out of your ZSL service.
+Generate OpenAPI specification for your models and API out of your ZSL service. This module scans the given packages
+for the persistent models and generates model definitions out of them.
+
+The full API (paths) may be declared manually.
 
 * Free software: BSD license
 
@@ -85,6 +88,8 @@ Then you may use CLI `open_api` command.
         --package storage.models.persistent \
         --output api/openapi_spec_full.yml \
         --description api/openapi_spec.yml
+
+See more in the documentation mentioned below.
 
 Documentation
 =============

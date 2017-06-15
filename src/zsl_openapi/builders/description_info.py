@@ -3,6 +3,7 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import logging
 from builtins import *  # NOQA
 from collections import namedtuple
 from typing import Any  # NOQA
@@ -24,6 +25,7 @@ def fill(yaml_spec, api_description):
         # type: (Dict, Any)->None
         for k, v in dict_obj.items():
             if hint.type is None:
+                logging.getLogger(__name__).debug('Setting {0} to {1}'.format(camelcase_to_underscore(k), v))
                 fill(v, api_obj, camelcase_to_underscore(k), hint)
             else:
                 inner_api_obj = hint.type()
@@ -46,7 +48,7 @@ def fill(yaml_spec, api_description):
         elif isinstance(obj, list):
             fill_list(obj, api_obj, hint.hints[property_name])
         else:
-            setattr(api_obj, property_name, obj)
+            setattr(api_obj, PROPERTY_MAP.get(property_name, property_name), obj)
 
     Hint = namedtuple('Hint', ['type', 'appender', 'hints'])
 
@@ -58,6 +60,10 @@ def fill(yaml_spec, api_description):
             'properties': Hint(ApiModelProperty, 'add_property', EMPTY_HINT)
         }))
     })
+
+    PROPERTY_MAP = {
+        '$ref': 'ref'
+    }
 
     if isinstance(yaml_spec, dict):
         yaml_dict = yaml_spec
