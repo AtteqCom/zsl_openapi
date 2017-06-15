@@ -52,7 +52,7 @@ class OpenAPICliTestCase(ZslTestCase, TestCase, YAMLTestCase):
                 'generate',
                 '--output', self._temp_filename,
                 '--description', os.path.join(os.path.dirname(__file__), 'templates/test_cli_description_spec.yml'),
-                '--package', 'tests.    models',
+                '--package', 'tests.models',
                 '--package', 'tests.models_cli'
             ]
         )
