@@ -23,8 +23,8 @@ from injector import Binder  # NOQA
 from injector import Module
 from injector import provides
 from injector import singleton
-from zsl import inject
 from zsl import Config
+from zsl import inject
 from zsl.application.modules.cli_module import ZslCli
 from zsl.utils.injection_helper import simple_bind
 
