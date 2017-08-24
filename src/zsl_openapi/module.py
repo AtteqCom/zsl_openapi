@@ -75,7 +75,7 @@ class OpenAPICli(object):
                     mod = importlib.import_module(single_package)
                     ApiDescriptionSqlAlchemyModelDefinitionsBuilder(mod).build(api_description)
             except Exception as e:
-                traceback.print_exception()
+                traceback.print_exc()
                 print(e)
                 sys.exit(1)
             with open(output, 'w') as f:

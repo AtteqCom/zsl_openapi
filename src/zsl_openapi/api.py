@@ -99,3 +99,47 @@ class ApiDescription:
     def add_tag(self, tag):
         # type: (ApiTag)->None
         self._tags.append(tag)
+
+
+class ApiResponse:
+    def __init__(self):
+        self.description = None  # type:str
+        self.content = None
+
+
+class ApiOperation:
+    def __init__(self):
+        self.parameters = []  # type: List[ApiParameter]
+        self.description = None  # type: str
+        self.summary = None  # type: str
+        self.operationId = None  # type: str
+        self.responses = []  # type: Dict[str, ApiResponse]
+
+
+class ApiParameter:
+    def __init__(self):
+        self.name = id
+        self.in_ = ""
+        self.description = ""
+        self.required = True
+        self.type = "array"
+        self.items = {
+            "type = string"
+        }
+        self.style = ""
+
+
+class ApiPathItem:
+    def __init__(self):
+        self.summary = None  # type: str
+        self.description = None  # type: str
+        self.get = None  # type: ApiOperation
+        self.put = None  # type: ApiOperation
+        self.post = None  # type: ApiOperation
+        self.delete = None  # type: ApiOperation
+        self.options = None  # type: ApiOperation
+        self.head = None  # type: ApiOperation
+        self.patch = None  # type: ApiOperation
+        self.trace = None  # type: ApiOperation
+        self.servers = None  # type: ApiOperation
+        self.parameters = []  # type: List[ApiParameter]

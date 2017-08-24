@@ -72,7 +72,8 @@ def fill(yaml_spec, api_description):
     else:
         raise TypeError("When filling OpenAPI only dict/str/unicode may be parsed.")
 
-    del yaml_dict['paths']
+    if 'paths' in yaml_dict:
+        del yaml_dict['paths']
 
     fill_dict(yaml_dict, api_description, HINTS)
 
