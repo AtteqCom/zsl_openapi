@@ -24,7 +24,7 @@ def read(*names, **kwargs):
 
 setup(
     name='zsl_openapi',
-    version='0.1.3',
+    version='0.1.4',
     license='BSD',
     description='Generate OpenAPI specification out of your ZSL service.',
     long_description='%s\n%s' % (
