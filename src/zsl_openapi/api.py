@@ -81,11 +81,16 @@ class ApiDescription:
         self.external_docs = ApiExternalDocs()
         self._tags = []  # type: List[ApiTag]
         self._definitions = {}  # type: Dict[str, ApiModelDefinition]
+        self._paths = []  # type: List[ApiPathItem]
 
     @property
     def tags(self):
         # type: ()->List[ApiTag]
         return ImmutableList(self._tags)
+
+    def add_tag(self, tag):
+        # type: (ApiTag)->None
+        self._tags.append(tag)
 
     @property
     def definitions(self):
@@ -96,9 +101,14 @@ class ApiDescription:
         # type: (ApiModelDefinition)->None
         self._definitions[model_definition.name] = model_definition
 
-    def add_tag(self, tag):
-        # type: (ApiTag)->None
-        self._tags.append(tag)
+    @property
+    def paths(self):
+        # type: ()->ImmutableList[ApiPathItem]
+        return ImmutableList(self._paths)
+
+    def add_path(self, path):
+        # type: (ApiPathItem)->None
+        self._paths.append(path)
 
 
 class ApiResponse:
