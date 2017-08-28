@@ -81,11 +81,16 @@ class ApiDescription:
         self.external_docs = ApiExternalDocs()
         self._tags = []  # type: List[ApiTag]
         self._definitions = {}  # type: Dict[str, ApiModelDefinition]
+        self._paths = []  # type: List[ApiPathItem]
 
     @property
     def tags(self):
         # type: ()->List[ApiTag]
         return ImmutableList(self._tags)
+
+    def add_tag(self, tag):
+        # type: (ApiTag)->None
+        self._tags.append(tag)
 
     @property
     def definitions(self):
@@ -96,6 +101,55 @@ class ApiDescription:
         # type: (ApiModelDefinition)->None
         self._definitions[model_definition.name] = model_definition
 
-    def add_tag(self, tag):
-        # type: (ApiTag)->None
-        self._tags.append(tag)
+    @property
+    def paths(self):
+        # type: ()->ImmutableList[ApiPathItem]
+        return ImmutableList(self._paths)
+
+    def add_path(self, path):
+        # type: (ApiPathItem)->None
+        self._paths.append(path)
+
+
+class ApiResponse:
+    def __init__(self):
+        self.description = None  # type:str
+        self.content = None
+
+
+class ApiOperation:
+    def __init__(self):
+        self.parameters = []  # type: List[ApiParameter]
+        self.description = None  # type: str
+        self.summary = None  # type: str
+        self.operationId = None  # type: str
+        self.responses = []  # type: Dict[str, ApiResponse]
+
+
+class ApiParameter:
+    def __init__(self):
+        self.name = id
+        self.in_ = ""
+        self.description = ""
+        self.required = True
+        self.type = "array"
+        self.items = {
+            "type = string"
+        }
+        self.style = ""
+
+
+class ApiPathItem:
+    def __init__(self):
+        self.summary = None  # type: str
+        self.description = None  # type: str
+        self.get = None  # type: ApiOperation
+        self.put = None  # type: ApiOperation
+        self.post = None  # type: ApiOperation
+        self.delete = None  # type: ApiOperation
+        self.options = None  # type: ApiOperation
+        self.head = None  # type: ApiOperation
+        self.patch = None  # type: ApiOperation
+        self.trace = None  # type: ApiOperation
+        self.servers = None  # type: ApiOperation
+        self.parameters = []  # type: List[ApiParameter]

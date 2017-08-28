@@ -19,11 +19,11 @@ import traceback
 from builtins import *  # NOQA
 
 import click
-from flask.config import Config
 from injector import Binder  # NOQA
 from injector import Module
 from injector import provides
 from injector import singleton
+from zsl import Config
 from zsl import inject
 from zsl.application.modules.cli_module import ZslCli
 from zsl.utils.injection_helper import simple_bind
@@ -31,6 +31,7 @@ from zsl.utils.injection_helper import simple_bind
 from zsl_openapi.api import ApiDescription
 from zsl_openapi.builders.description_info import FileApiDescriptionInfoBuilder
 from zsl_openapi.builders.models import ApiDescriptionSqlAlchemyModelDefinitionsBuilder
+from zsl_openapi.builders.tasks import TaskApiDescriptionBuilder
 from zsl_openapi.configuration import OpenAPIConfiguration
 from zsl_openapi.generator import ApiGenerator
 
@@ -74,8 +75,9 @@ class OpenAPICli(object):
                 for single_package in package:
                     mod = importlib.import_module(single_package)
                     ApiDescriptionSqlAlchemyModelDefinitionsBuilder(mod).build(api_description)
+                TaskApiDescriptionBuilder().build(api_description)
             except Exception as e:
-                traceback.print_exception()
+                traceback.print_exc()
                 print(e)
                 sys.exit(1)
             with open(output, 'w') as f:
