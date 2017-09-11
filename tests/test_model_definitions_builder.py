@@ -9,7 +9,7 @@ from unittest.case import TestCase
 import models
 
 from zsl_openapi.api import ApiDescription
-from zsl_openapi.builders.models import ApiDescriptionSqlAlchemyModelDefinitionsBuilder
+from zsl_openapi.builders.models import PersistentModelsApiDescriptionBuilder
 
 
 class ModelBuilderTestCase(TestCase):
@@ -19,11 +19,11 @@ class ModelBuilderTestCase(TestCase):
         self.thenApiDescriptionShouldBeCorrect(description)
 
     def givenBuilderWithModels(self):
-        # type: ()->ApiDescriptionSqlAlchemyModelDefinitionsBuilder
-        return ApiDescriptionSqlAlchemyModelDefinitionsBuilder(models)
+        # type: ()->PersistentModelsApiDescriptionBuilder
+        return PersistentModelsApiDescriptionBuilder(models)
 
     def whenGeneratingApiDescription(self, builder):
-        # type: (ApiDescriptionSqlAlchemyModelDefinitionsBuilder)->ApiDescription
+        # type: (PersistentModelsApiDescriptionBuilder)->ApiDescription
         description = ApiDescription()
         builder.build(description)
         return description

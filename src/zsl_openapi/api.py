@@ -81,7 +81,7 @@ class ApiDescription:
         self.external_docs = ApiExternalDocs()
         self._tags = []  # type: List[ApiTag]
         self._definitions = {}  # type: Dict[str, ApiModelDefinition]
-        self._paths = []  # type: List[ApiPathItem]
+        self._paths = {}  # type: Dict[str, ApiPathItem]
 
     @property
     def tags(self):
@@ -103,12 +103,12 @@ class ApiDescription:
 
     @property
     def paths(self):
-        # type: ()->ImmutableList[ApiPathItem]
-        return ImmutableList(self._paths)
+        # type: ()->Dict[str, ApiPathItem]
+        return ImmutableDict(self._paths)
 
-    def add_path(self, path):
-        # type: (ApiPathItem)->None
-        self._paths.append(path)
+    def set_path(self, url, path_item):
+        # type: (str, ApiPathItem)->None
+        self._paths[url] = path_item
 
 
 class ApiResponse:
@@ -122,8 +122,19 @@ class ApiOperation:
         self.parameters = []  # type: List[ApiParameter]
         self.description = None  # type: str
         self.summary = None  # type: str
-        self.operationId = None  # type: str
-        self.responses = []  # type: Dict[str, ApiResponse]
+        self.operation_id = None  # type: str
+        self.request_body = None  # type: Dict[str, Any]
+        self.produces = ['application/json']
+        self._responses = {}  # type: Dict[str, ApiResponse]
+
+    @property
+    def responses(self):
+        # type: ()->Dict[int, ApiResponse]
+        return ImmutableDict(self._responses)
+
+    def set_response(self, status_code, response):
+        # type: (int, ApiResponse)->None
+        self._responses[status_code] = response
 
 
 class ApiParameter:

@@ -16,12 +16,17 @@ from zsl.utils.string_helper import underscore_to_camelcase
 from zsl_openapi.api import ApiDescription  # NOQA
 from zsl_openapi.api import ApiExternalDocs  # NOQA
 from zsl_openapi.api import ApiModelDefinition  # NOQA
+from zsl_openapi.api import ApiOperation
+from zsl_openapi.api import ApiPathItem
 from zsl_openapi.api import ApiTag  # NOQA
 
 Accumulator = Dict[str, Any]
 
 
 class ApiGenerator(object):
+    """Generates a dictionary suitable for YAML/JSON serialization out of the
+    given ::class:`zsl_openapi.api.ApiDescription`."""
+
     def generate(self, api_description, output):
         # type: (ApiDescription, IO[str]|TextIOWrapper)->None
         accumulator = {}  # type: Accumulator
@@ -30,7 +35,7 @@ class ApiGenerator(object):
         self._write_definitions(api_description, accumulator)
         self._write_external_docs(api_description.external_docs, accumulator)
         self._write_tags(api_description, accumulator)
-        accumulator['paths'] = {}
+        self._write_paths(api_description, accumulator)
         yaml.safe_dump(accumulator, output, encoding='utf-8', allow_unicode=True, default_flow_style=False)
 
     def _write_header(self, accumulator):
@@ -109,6 +114,33 @@ class ApiGenerator(object):
         self._write_external_docs(tag.external_docs, accumulator_tag)
         accumulator_tags.append(accumulator_tag)
         return accumulator_tag
+
+    def _write_paths(self, api_description, accumulator):
+        # type: (ApiDescription, Accumulator)->None
+        paths_accumulator = {}
+        for url, path in api_description.paths.items():
+            self._write_path(url, path, paths_accumulator)
+        self._write_value('paths', paths_accumulator, accumulator)
+
+    def _write_path(self, url, api_path, accumulator):
+        # type: (str, ApiPathItem, Accumulator)->None
+        operation = {}
+        accumulator[url] = {
+            'post': operation
+        }
+        self._write_api_operation(api_path.post, operation)
+
+    def _write_api_operation(self, operation, accumulator):
+        # type: (ApiOperation, Accumulator)->None
+        self._write_properties(operation, accumulator, ['description', 'summary', 'operation_id', 'produces'])
+
+        self._write_single_property(operation, accumulator, 'request_body')
+        self._write_single_property(operation, accumulator, 'parameters')
+        accumulator['responses'] = responses = {}
+        for status_code, response in operation.responses.items():
+            response_accumulator = {}
+            responses[status_code] = response_accumulator
+            self._write_properties(response, response_accumulator, ['content', 'schema', 'description'])
 
     def _write_properties(self, api_obj, accumulator, properties, result_property_names=None):
         # type: (object, Accumulator, List[str], Dict[str, str])->None

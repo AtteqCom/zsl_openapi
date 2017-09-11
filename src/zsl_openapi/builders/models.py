@@ -21,7 +21,11 @@ from zsl_openapi.api import ApiModelProperty  # NOQA
 from zsl_openapi.builders import ApiDescriptionBuilder
 
 
-class ApiDescriptionSqlAlchemyModelDefinitionsBuilder(ApiDescriptionBuilder):
+class PersistentModelsApiDescriptionBuilder(ApiDescriptionBuilder):
+    """Builds the ApiDescription for the persistent models. It is able to handle simple scalar properties and
+    relationships.
+    """
+
     def __init__(self, package):
         self._models = []
         self._append_models(package)

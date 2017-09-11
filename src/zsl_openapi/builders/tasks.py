@@ -1,4 +1,7 @@
-from zsl_openapi.api import ApiDescription, ApiPathItem, ApiOperation
+from typing import Type
+
+from zsl.db.model.app_model import AppModel
+from zsl_openapi.api import ApiDescription, ApiPathItem, ApiOperation, ApiModelDefinition, ApiModelProperty, ApiResponse
 
 from zsl import inject
 from zsl.router.task import TaskConfiguration
@@ -6,7 +9,7 @@ from zsl.router.task import TaskConfiguration
 from zsl_openapi.builders import ApiDescriptionBuilder
 
 
-class TaskApiDescriptionBuilder(ApiDescriptionBuilder):
+class TasksApiDescriptionBuilder(ApiDescriptionBuilder):
     @inject(task_configuration=TaskConfiguration)
     def __init__(self, task_configuration):
         # type: (TaskConfiguration)->None
@@ -14,14 +17,70 @@ class TaskApiDescriptionBuilder(ApiDescriptionBuilder):
 
     def build(self, api_description):
         # type: (ApiDescription)->None
-
         for namespace in self._task_configuration.namespaces:
             for route, task in namespace.get_routes().items():
-                path = namespace.namespace + '/' + route
-                # api_description
-                print(path + ' -> ' + str(task))
+                if hasattr(task, 'Request'):
+                    request_class = task.Request
+                    request_ref = self._build_model(request_class, api_description)
+                else:
+                    request_ref = None
+
+                if hasattr(task, 'Response'):
+                    response_class = task.Response
+                    response_ref = self._build_model(request_class, api_description)
+                else:
+                    response_ref = None
+
+                url = namespace.namespace + '/' + route
                 path_item = ApiPathItem()
                 path_item.post = ApiOperation()
                 path_item.post.description = task.__doc__
-                path_item.post.parameters
-                api_description.add_path(path_item)
+
+                if request_ref:
+                    path_item.post.parameters = [
+                        {
+                            "in": "body",
+                            "name": "body",
+                            "description": "Request",
+                            "required": True,
+                            "schema": {
+                                "$ref": request_ref
+                            }
+                        }
+                    ]
+
+                    path_item.post.request_body = {
+                        'content': {
+                            'application/json': {
+                                'schema': {
+                                    '$ref': request_ref
+                                }
+                            }
+                        }
+                    }
+
+                if response_ref:
+                    response = ApiResponse()
+                    response.content = 'application/json'
+                    response.schema = {"$ref": response_ref}
+                    path_item.post.set_response(200, response)
+
+                api_description.set_path(url, path_item)
+
+    def _build_model(self, model_cls, api_description):
+        # type: (Type, ApiDescription)->str
+        # Each AppModel definition is created by
+        # `:class:zsl_openapi.builders.models.PersistentModelsApiDescriptionBuilder`
+        if issubclass(model_cls, AppModel):
+            return "#/definitions/{0}".format(model_cls.__name__)
+
+        model_definition = ApiModelDefinition()
+        model_definition.name = model_cls.__name__
+        model_definition.type = "object"
+        for model_property in model_cls().__dict__:
+            model_property_definition = ApiModelProperty()
+            model_property_definition.name = model_property
+            model_property_definition.type = "string"
+            model_definition.add_property(model_property_definition)
+        api_description.add_model_definition(model_definition)
+        return "#/definitions/{0}".format(model_cls.__name__)
