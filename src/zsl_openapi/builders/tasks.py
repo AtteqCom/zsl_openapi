@@ -1,11 +1,15 @@
-from typing import Type
-
-from zsl.db.model.app_model import AppModel
-from zsl_openapi.api import ApiDescription, ApiPathItem, ApiOperation, ApiModelDefinition, ApiModelProperty, ApiResponse
+from typing import Type  # NOQA
 
 from zsl import inject
+from zsl.db.model.app_model import AppModel
 from zsl.router.task import TaskConfiguration
 
+from zsl_openapi.api import ApiDescription  # NOQA
+from zsl_openapi.api import ApiModelDefinition
+from zsl_openapi.api import ApiModelProperty
+from zsl_openapi.api import ApiOperation
+from zsl_openapi.api import ApiPathItem
+from zsl_openapi.api import ApiResponse
 from zsl_openapi.builders import ApiDescriptionBuilder
 
 
@@ -27,7 +31,7 @@ class TasksApiDescriptionBuilder(ApiDescriptionBuilder):
 
                 if hasattr(task, 'Response'):
                     response_class = task.Response
-                    response_ref = self._build_model(request_class, api_description)
+                    response_ref = self._build_model(response_class, api_description)
                 else:
                     response_ref = None
 
