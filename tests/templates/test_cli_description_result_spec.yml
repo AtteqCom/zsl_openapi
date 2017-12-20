@@ -54,4 +54,3 @@ definitions:
         type: "string"
       email:
         type: "string"
-paths: {}
