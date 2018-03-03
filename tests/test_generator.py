@@ -15,6 +15,7 @@ from zsl_openapi.api import ApiContact
 from zsl_openapi.api import ApiDescription
 from zsl_openapi.api import ApiDescriptionInfo
 from zsl_openapi.api import ApiExternalDocs
+from zsl_openapi.api import ApiKey
 from zsl_openapi.api import ApiLicense
 from zsl_openapi.api import ApiModelDefinition
 from zsl_openapi.api import ApiModelProperty
@@ -65,6 +66,12 @@ class GeneratorTestCase(YAMLTestCase, TestCase):
         tag.name = "TagName"
         tag.description = "TagDescription"
         d.add_tag(tag)
+
+        api_key = ApiKey()
+        api_key.name = "api_key_name"
+        api_key.__dict__['in'] = "in"
+        api_key.type = "api_key_type"
+        d.security_definitions.api_key = api_key
 
         d.external_docs = ext_docs
         return d

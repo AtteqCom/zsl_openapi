@@ -1,5 +1,6 @@
-from typing import List, Callable
-from typing import Optional
+from typing import Callable  # NOQA
+from typing import List  # NOQA
+from typing import Optional  # NOQA
 
 
 class OpenAPIMetadata:
@@ -13,28 +14,38 @@ class OpenAPIMetadata:
 class OpenAPI:
 
     @staticmethod
-    def tags(tags: List[str]) -> Callable[[type], type]:
-        def wrapper(cls: type) -> type:
-            meta = get_metadata(cls)
+    def tags(tags):
+        # type: (List[str])->Callable[[type], type]
+        def applicator(meta):
+            # type: (OpenAPIMetadata)->None
             meta.tags = tags
-            return cls
 
-        return wrapper
+        return OpenAPI._wrapper(applicator)
 
     @staticmethod
-    def operation_id(operation_id: str) -> Callable[[type], type]:
-        def wrapper(cls: type) -> type:
-            meta = get_metadata(cls)
+    def operation_id(operation_id):
+        # type: (str)->Callable[[type], type]
+        def applicator(meta):
+            # type: (OpenAPIMetadata)->None
             meta.operation_id = operation_id
-            return cls
 
-        return wrapper
+        return OpenAPI._wrapper(applicator)
 
     @staticmethod
-    def summary(summary: str) -> Callable[[type], type]:
+    def summary(summary):
+        # type: (str)->Callable[[type], type]
+        def applicator(meta):
+            # type: (OpenAPIMetadata)->None
+            meta.summary = summary
+
+        return OpenAPI._wrapper(applicator)
+
+    @staticmethod
+    def _wrapper(metadata_applicator):
+        # type: (Callable[[OpenAPIMetadata], None])->Callable[[type], type]
         def wrapper(cls: type) -> type:
             meta = get_metadata(cls)
-            meta.summary = summary
+            metadata_applicator(meta)
             return cls
 
         return wrapper

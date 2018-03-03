@@ -6,8 +6,8 @@ from __future__ import unicode_literals
 from builtins import *  # NOQA
 from typing import Dict  # NOQA
 from typing import List  # NOQA
+from typing import Optional  # NOQA
 
-from typing import Optional
 from werkzeug.datastructures import ImmutableDict
 from werkzeug.datastructures import ImmutableList
 

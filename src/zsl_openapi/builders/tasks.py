@@ -1,6 +1,5 @@
-from typing import Type  # NOQA
-
 import logging
+from typing import Type  # NOQA
 
 from zsl import inject
 from zsl.db.model.app_model import AppModel
@@ -13,7 +12,7 @@ from zsl_openapi.api import ApiOperation
 from zsl_openapi.api import ApiPathItem
 from zsl_openapi.api import ApiResponse
 from zsl_openapi.builders import ApiDescriptionBuilder
-from zsl_openapi.decorators import OpenAPI, get_metadata
+from zsl_openapi.decorators import get_metadata
 
 
 class TasksApiDescriptionBuilder(ApiDescriptionBuilder):
