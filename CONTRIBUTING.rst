@@ -81,7 +81,7 @@ For merging, you should:
 4. Add yourself to ``AUTHORS.rst``.
 
 .. [1] If you don't have all the necessary python versions available locally
-        you can rely on Travis - it will
+       you can rely on Travis - it will
        `run the tests <https://travis-ci.org/AtteqCom/zsl_openapi/pull_requests>`_
        for each change you add in the pull request.
 

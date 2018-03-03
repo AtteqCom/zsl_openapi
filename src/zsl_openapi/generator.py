@@ -16,8 +16,8 @@ from zsl.utils.string_helper import underscore_to_camelcase
 from zsl_openapi.api import ApiDescription  # NOQA
 from zsl_openapi.api import ApiExternalDocs  # NOQA
 from zsl_openapi.api import ApiModelDefinition  # NOQA
-from zsl_openapi.api import ApiOperation
-from zsl_openapi.api import ApiPathItem
+from zsl_openapi.api import ApiOperation  # NOQA
+from zsl_openapi.api import ApiPathItem  # NOQA
 from zsl_openapi.api import ApiTag  # NOQA
 
 Accumulator = Dict[str, Any]
