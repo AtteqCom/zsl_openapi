@@ -11,7 +11,7 @@ from unittest.case import TestCase
 from yaml_test_case import YAMLTestCase
 
 from zsl_openapi import IS_PYTHON_3
-from zsl_openapi.api import ApiContact
+from zsl_openapi.api import ApiContact, SecurityDefinitions
 from zsl_openapi.api import ApiDescription
 from zsl_openapi.api import ApiDescriptionInfo
 from zsl_openapi.api import ApiExternalDocs
@@ -71,6 +71,7 @@ class GeneratorTestCase(YAMLTestCase, TestCase):
         api_key.name = "api_key_name"
         api_key.__dict__['in'] = "in"
         api_key.type = "api_key_type"
+        d.security_definitions = SecurityDefinitions()
         d.security_definitions.api_key = api_key
 
         d.external_docs = ext_docs

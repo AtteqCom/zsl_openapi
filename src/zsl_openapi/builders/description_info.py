@@ -12,7 +12,7 @@ from typing import Dict  # NOQA
 import yaml
 from zsl.utils.string_helper import camelcase_to_underscore
 
-from zsl_openapi.api import ApiDescription  # NOQA
+from zsl_openapi.api import ApiDescription, SecurityDefinitions  # NOQA
 from zsl_openapi.api import ApiModelDefinition
 from zsl_openapi.api import ApiModelProperty
 from zsl_openapi.api import ApiTag
@@ -58,7 +58,8 @@ def fill(yaml_spec, api_description):
         'tags': Hint(ApiTag, 'add_tag', EMPTY_HINT),
         'definitions': Hint(ApiModelDefinition, 'add_model_definition', Hint(None, None, {
             'properties': Hint(ApiModelProperty, 'add_property', EMPTY_HINT)
-        }))
+        })),
+        'security_definitions': Hint(SecurityDefinitions, 'set_security_definitions', EMPTY_HINT)
     })
 
     PROPERTY_MAP = {

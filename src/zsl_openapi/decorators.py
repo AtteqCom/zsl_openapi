@@ -43,7 +43,8 @@ class OpenAPI:
     @staticmethod
     def _wrapper(metadata_applicator):
         # type: (Callable[[OpenAPIMetadata], None])->Callable[[type], type]
-        def wrapper(cls: type) -> type:
+        def wrapper(cls):
+            # type: (type) -> type
             meta = get_metadata(cls)
             metadata_applicator(meta)
             return cls
@@ -51,7 +52,8 @@ class OpenAPI:
         return wrapper
 
 
-def get_metadata(cls: type) -> OpenAPIMetadata:
+def get_metadata(cls):
+    # type: (type)->OpenAPIMetadata
     if not hasattr(cls, '__open_api__'):
         cls.__open_api__ = OpenAPIMetadata()
     return cls.__open_api__

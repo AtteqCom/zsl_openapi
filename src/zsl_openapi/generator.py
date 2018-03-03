@@ -11,6 +11,8 @@ from typing import Dict  # NOQA
 from typing import List  # NOQA
 
 import yaml
+from typing import Optional
+
 from zsl.utils.string_helper import underscore_to_camelcase
 
 from zsl_openapi.api import ApiDescription  # NOQA
@@ -19,6 +21,7 @@ from zsl_openapi.api import ApiModelDefinition  # NOQA
 from zsl_openapi.api import ApiOperation  # NOQA
 from zsl_openapi.api import ApiPathItem  # NOQA
 from zsl_openapi.api import ApiTag  # NOQA
+from zsl_openapi.api import SecurityDefinitions
 
 Accumulator = Dict[str, Any]
 
@@ -175,5 +178,11 @@ class ApiGenerator(object):
 
     @staticmethod
     def _write_security_definitions(security_definitions, accumulator):
+        # type: (Optional[SecurityDefinitions], Accumulator)->None
+        if security_definitions is None:
+            return
+
         api_key = security_definitions.api_key
-        ApiGenerator._write_value('security_definitions', api_key.__dict__, accumulator)
+        sd_accumulator = {}
+        ApiGenerator._write_value('api_key', api_key.__dict__, sd_accumulator)
+        ApiGenerator._write_value('security_definitions', sd_accumulator, accumulator)

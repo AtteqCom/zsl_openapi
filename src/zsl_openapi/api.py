@@ -92,7 +92,7 @@ class ApiDescription:
     def __init__(self):
         self.info = ApiDescriptionInfo()
         self.external_docs = ApiExternalDocs()
-        self.security_definitions = SecurityDefinitions()
+        self.security_definitions = None
         self._tags = []  # type: List[ApiTag]
         self._definitions = {}  # type: Dict[str, ApiModelDefinition]
         self._paths = {}  # type: Dict[str, ApiPathItem]
@@ -123,6 +123,10 @@ class ApiDescription:
     def set_path(self, url, path_item):
         # type: (str, ApiPathItem)->None
         self._paths[url] = path_item
+
+    def set_security_definitions(self, security_definitions):
+        # type: (SecurityDefinitions)->None
+        self.security_definitions = security_definitions
 
 
 class ApiResponse:
