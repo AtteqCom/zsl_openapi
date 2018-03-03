@@ -36,9 +36,9 @@ Overview
     :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/zsl-openapi
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/AtteqCom/zsl_openapi/v0.1.4.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/AtteqCom/zsl_openapi/v0.2.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/AtteqCom/zsl_openapi/compare/v0.1.4...master
+    :target: https://github.com/AtteqCom/zsl_openapi/compare/v0.2.0...master
 
 .. |wheel| image:: https://img.shields.io/pypi/wheel/zsl-openapi.svg
     :alt: PyPI Wheel
