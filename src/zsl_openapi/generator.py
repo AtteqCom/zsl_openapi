@@ -133,7 +133,6 @@ class ApiGenerator(object):
     def _write_api_operation(self, operation, accumulator):
         # type: (ApiOperation, Accumulator)->None
         self._write_properties(operation, accumulator, ['description', 'summary', 'operation_id', 'produces'])
-
         self._write_single_property(operation, accumulator, 'request_body')
         self._write_single_property(operation, accumulator, 'parameters')
         accumulator['responses'] = responses = {}

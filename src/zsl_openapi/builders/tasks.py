@@ -34,7 +34,8 @@ class TasksApiDescriptionBuilder(ApiDescriptionBuilder):
                 url = namespace.namespace + '/' + route
                 path_item = ApiPathItem()
                 path_item.post = ApiOperation()
-                path_item.post.description = task.__doc__
+                # path_item.post.description = task.__doc__.strip() if task.__doc__ is not None else None
+                path_item.post.operation_id = url[url.rfind("/") + 1:]
 
                 if request_ref:
                     path_item.post.parameters = [
