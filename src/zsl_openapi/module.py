@@ -57,7 +57,7 @@ class OpenAPICli(object):
 
     @inject(zsl_cli=ZslCli)
     def __init__(self, zsl_cli):
-        # type: (ZslCli) -> OpenAPICli
+        # type: (ZslCli) -> None
         logging.getLogger(__name__).debug("Creating OpenAPI CLI.")
 
         @zsl_cli.cli.group(help='Run OpenAPI tasks.')

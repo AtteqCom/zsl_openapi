@@ -36,6 +36,7 @@ class ApiGenerator(object):
         self._write_external_docs(api_description.external_docs, accumulator)
         self._write_tags(api_description, accumulator)
         self._write_paths(api_description, accumulator)
+        self._write_security_definitions(api_description.security_definitions, accumulator)
         yaml.safe_dump(accumulator, output, encoding='utf-8', allow_unicode=True, default_flow_style=False)
 
     def _write_header(self, accumulator):
@@ -132,7 +133,7 @@ class ApiGenerator(object):
 
     def _write_api_operation(self, operation, accumulator):
         # type: (ApiOperation, Accumulator)->None
-        self._write_properties(operation, accumulator, ['description', 'summary', 'operation_id', 'produces'])
+        self._write_properties(operation, accumulator, ['description', 'summary', 'operation_id', 'produces', 'tags'])
         self._write_single_property(operation, accumulator, 'request_body')
         self._write_single_property(operation, accumulator, 'parameters')
         accumulator['responses'] = responses = {}
@@ -171,3 +172,8 @@ class ApiGenerator(object):
             return
 
         accumulator[property_name] = value
+
+    @staticmethod
+    def _write_security_definitions(security_definitions, accumulator):
+        api_key = security_definitions.api_key
+        ApiGenerator._write_value('security_definitions', api_key.__dict__, accumulator)

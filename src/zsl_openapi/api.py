@@ -7,6 +7,7 @@ from builtins import *  # NOQA
 from typing import Dict  # NOQA
 from typing import List  # NOQA
 
+from typing import Optional
 from werkzeug.datastructures import ImmutableDict
 from werkzeug.datastructures import ImmutableList
 
@@ -75,10 +76,23 @@ class ApiModelDefinition:
         self._properties[model_property.name] = model_property
 
 
+class ApiKey:
+
+    def __init__(self):
+        self.type = None
+        self.name = None
+
+
+class SecurityDefinitions:
+    def __init__(self):
+        self.api_key = ApiKey()
+
+
 class ApiDescription:
     def __init__(self):
         self.info = ApiDescriptionInfo()
         self.external_docs = ApiExternalDocs()
+        self.security_definitions = SecurityDefinitions()
         self._tags = []  # type: List[ApiTag]
         self._definitions = {}  # type: Dict[str, ApiModelDefinition]
         self._paths = {}  # type: Dict[str, ApiPathItem]
@@ -123,8 +137,9 @@ class ApiOperation:
         self.description = None  # type: str
         self.summary = None  # type: str
         self.operation_id = None  # type: str
-        self.request_body = None  # type: Dict[str, Any]
+        self.request_body = None  # type: Optional[Dict[str, Any]]
         self.produces = ['application/json']
+        self.tags = None  # type: Optional[List[str]]
         self._responses = {}  # type: Dict[str, ApiResponse]
 
     @property

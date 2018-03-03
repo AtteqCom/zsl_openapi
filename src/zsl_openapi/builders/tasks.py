@@ -1,5 +1,7 @@
 from typing import Type  # NOQA
 
+import logging
+
 from zsl import inject
 from zsl.db.model.app_model import AppModel
 from zsl.router.task import TaskConfiguration
@@ -11,6 +13,7 @@ from zsl_openapi.api import ApiOperation
 from zsl_openapi.api import ApiPathItem
 from zsl_openapi.api import ApiResponse
 from zsl_openapi.builders import ApiDescriptionBuilder
+from zsl_openapi.decorators import OpenAPI, get_metadata
 
 
 class TasksApiDescriptionBuilder(ApiDescriptionBuilder):
@@ -36,10 +39,18 @@ class TasksApiDescriptionBuilder(ApiDescriptionBuilder):
                     response_ref = None
 
                 url = namespace.namespace + '/' + route
+                url = '/' + url.lstrip('/')
+                logging.getLogger(__name__).info("Generating task at url '{0}'.".format(url))
+                meta = get_metadata(task)
+
                 path_item = ApiPathItem()
                 path_item.post = ApiOperation()
-                # path_item.post.description = task.__doc__.strip() if task.__doc__ is not None else None
-                path_item.post.operation_id = url[url.rfind("/") + 1:]
+                path_item.post.tags = meta.tags
+                path_item.post.summary = meta.summary
+                path_item.post.description = task.__doc__.strip() if task.__doc__ is not None else None
+                path_item.post.operation_id = meta.operation_id or url[url.rfind("/") + 1:]
+                if not path_item.post.description:
+                    path_item.post.description = path_item.post.summary
 
                 if request_ref:
                     path_item.post.parameters = [
