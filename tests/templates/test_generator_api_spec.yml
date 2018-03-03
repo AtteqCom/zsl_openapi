@@ -25,4 +25,8 @@ tags:
 externalDocs:
   description: "Description"
   url: "Url"
-paths: {}
+security_definitions:
+  api_key:
+    name: api_key_name
+    in: in
+    type: api_key_type

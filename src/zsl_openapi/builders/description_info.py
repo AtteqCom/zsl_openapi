@@ -16,6 +16,7 @@ from zsl_openapi.api import ApiDescription  # NOQA
 from zsl_openapi.api import ApiModelDefinition
 from zsl_openapi.api import ApiModelProperty
 from zsl_openapi.api import ApiTag
+from zsl_openapi.api import SecurityDefinitions
 from zsl_openapi.builders import ApiDescriptionBuilder
 
 
@@ -58,7 +59,8 @@ def fill(yaml_spec, api_description):
         'tags': Hint(ApiTag, 'add_tag', EMPTY_HINT),
         'definitions': Hint(ApiModelDefinition, 'add_model_definition', Hint(None, None, {
             'properties': Hint(ApiModelProperty, 'add_property', EMPTY_HINT)
-        }))
+        })),
+        'security_definitions': Hint(SecurityDefinitions, 'set_security_definitions', EMPTY_HINT)
     })
 
     PROPERTY_MAP = {
@@ -72,7 +74,8 @@ def fill(yaml_spec, api_description):
     else:
         raise TypeError("When filling OpenAPI only dict/str/unicode may be parsed.")
 
-    del yaml_dict['paths']
+    if 'paths' in yaml_dict:
+        del yaml_dict['paths']
 
     fill_dict(yaml_dict, api_description, HINTS)
 

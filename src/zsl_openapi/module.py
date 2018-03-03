@@ -30,7 +30,8 @@ from zsl.utils.injection_helper import simple_bind
 
 from zsl_openapi.api import ApiDescription
 from zsl_openapi.builders.description_info import FileApiDescriptionInfoBuilder
-from zsl_openapi.builders.models import ApiDescriptionSqlAlchemyModelDefinitionsBuilder
+from zsl_openapi.builders.models import PersistentModelsApiDescriptionBuilder
+from zsl_openapi.builders.tasks import TasksApiDescriptionBuilder
 from zsl_openapi.configuration import OpenAPIConfiguration
 from zsl_openapi.generator import ApiGenerator
 
@@ -56,7 +57,7 @@ class OpenAPICli(object):
 
     @inject(zsl_cli=ZslCli)
     def __init__(self, zsl_cli):
-        # type: (ZslCli) -> OpenAPICli
+        # type: (ZslCli) -> None
         logging.getLogger(__name__).debug("Creating OpenAPI CLI.")
 
         @zsl_cli.cli.group(help='Run OpenAPI tasks.')
@@ -73,9 +74,10 @@ class OpenAPICli(object):
                 FileApiDescriptionInfoBuilder(description).build(api_description)
                 for single_package in package:
                     mod = importlib.import_module(single_package)
-                    ApiDescriptionSqlAlchemyModelDefinitionsBuilder(mod).build(api_description)
+                    PersistentModelsApiDescriptionBuilder(mod).build(api_description)
+                TasksApiDescriptionBuilder().build(api_description)
             except Exception as e:
-                traceback.print_exception()
+                traceback.print_exc()
                 print(e)
                 sys.exit(1)
             with open(output, 'w') as f:

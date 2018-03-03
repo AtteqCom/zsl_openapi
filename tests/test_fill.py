@@ -17,17 +17,17 @@ from zsl_openapi.builders.description_info import fill
 from zsl_openapi.generator import ApiGenerator
 
 
-class FillTestCase(TestCase, YAMLTestCase):
+class FillTestCase(YAMLTestCase, TestCase):
+
     def testYamlFill(self):
         logging.getLogger('zsl_openapi').setLevel(logging.DEBUG)
 
         api_description = ApiDescription()
-        yaml_spec = self.render_template('test_cli_description_result_spec.yml')
+        yaml_spec = self.renderTemplate('test_cli_description_result_spec.yml')
         fill(yaml_spec, api_description)
         out = StringIO() if IS_PYTHON_3 else BytesIO()
         ApiGenerator().generate(api_description, out)
 
-        self.maxDiff = None
         self.thenYAMLShouldBeEqual(
             'test_cli_description_result_spec.yml',
             out.getvalue(),

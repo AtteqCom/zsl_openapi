@@ -33,7 +33,7 @@ class TestContainer(IoCContainer):
     open_api = OpenAPIModule
 
 
-class OpenAPICliTestCase(ZslTestCase, TestCase, YAMLTestCase):
+class OpenAPICliTestCase(ZslTestCase, YAMLTestCase, TestCase):
     ZSL_TEST_CONFIGURATION = ZslTestConfiguration('open_api_cli_test', container=TestContainer,
                                                   config_object=IN_MEMORY_DB_SETTINGS)
 
@@ -61,7 +61,6 @@ class OpenAPICliTestCase(ZslTestCase, TestCase, YAMLTestCase):
 
         with open(self._temp_filename) as f:
             result_file_content = f.read()
-        self.maxDiff = None
         self.thenYAMLShouldBeEqual(
             'test_cli_description_result_spec.yml',
             result_file_content,
