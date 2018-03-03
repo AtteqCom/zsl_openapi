@@ -58,7 +58,9 @@ Overview
 Generate OpenAPI specification for your models and API out of your ZSL service. This module scans the given packages
 for the persistent models and generates model definitions out of them.
 
-The full API (paths) may be declared manually.
+Also the tasks (not methods) are scanned and their documentation is generated. The other API (paths) may be declared
+manually. To use create an empty `openapi_spec.yml` which is first read and enriched by the model and task API
+documentation.
 
 * Free software: BSD license
 
