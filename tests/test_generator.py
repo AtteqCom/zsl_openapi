@@ -11,7 +11,7 @@ from unittest.case import TestCase
 from yaml_test_case import YAMLTestCase
 
 from zsl_openapi import IS_PYTHON_3
-from zsl_openapi.api import ApiContact, SecurityDefinitions
+from zsl_openapi.api import ApiContact
 from zsl_openapi.api import ApiDescription
 from zsl_openapi.api import ApiDescriptionInfo
 from zsl_openapi.api import ApiExternalDocs
@@ -20,6 +20,7 @@ from zsl_openapi.api import ApiLicense
 from zsl_openapi.api import ApiModelDefinition
 from zsl_openapi.api import ApiModelProperty
 from zsl_openapi.api import ApiTag
+from zsl_openapi.api import SecurityDefinitions
 from zsl_openapi.generator import ApiGenerator
 
 

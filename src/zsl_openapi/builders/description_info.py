@@ -12,10 +12,11 @@ from typing import Dict  # NOQA
 import yaml
 from zsl.utils.string_helper import camelcase_to_underscore
 
-from zsl_openapi.api import ApiDescription, SecurityDefinitions  # NOQA
+from zsl_openapi.api import ApiDescription  # NOQA
 from zsl_openapi.api import ApiModelDefinition
 from zsl_openapi.api import ApiModelProperty
 from zsl_openapi.api import ApiTag
+from zsl_openapi.api import SecurityDefinitions
 from zsl_openapi.builders import ApiDescriptionBuilder
 
 
